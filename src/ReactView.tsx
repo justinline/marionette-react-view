@@ -48,7 +48,6 @@ const ReactView: typeof Mn.View = Mn.View.extend({
    * `dom:refresh` is triggered by the `attach` method and on subsequent re-renders
    */
   onDomRefresh: function () {
-    console.log("REFRESHING");
     this.renderValidation();
 
     this.root.render(this.renderComponent());

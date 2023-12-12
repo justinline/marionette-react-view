@@ -6,10 +6,6 @@ import _ from "lodash";
 import Backbone from "backbone";
 
 describe("buildWrapComponent", () => {
-  beforeEach(() => {
-    window.Backbone = Backbone;
-  });
-
   it("should return a function", () => {
     expect(typeof buildWrapComponent()).toBe("function");
   });
