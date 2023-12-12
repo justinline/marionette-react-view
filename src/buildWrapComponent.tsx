@@ -8,13 +8,14 @@ function isFunction(value: unknown) {
 }
 
 type ReactViewConstructor<
+  O = {},
   T extends Backbone.Model<any, Backbone.ModelSetOptions, any> = Backbone.Model<
     any,
     Backbone.ModelSetOptions,
     any
   >
 > = new (
-  options?: (Mn.ViewOptions<T> & { classNames: string[] }) | undefined
+  options?: (Mn.ViewOptions<T> & { classNames?: string[] } & O) | undefined
 ) => Mn.View<T>;
 
 type Options = {
@@ -35,15 +36,11 @@ type Options = {
   schema?: ZodSchema;
 };
 
-const buildExtendedView = ({
-  Component,
-  options = {},
-  Providers,
-}: {
+const buildExtendedView: <O>(props: {
   Component: React.FC;
   options: Options;
-  Providers?: React.FC<{ children: React.ReactNode }>;
-}) =>
+  Providers?: (providerProps: O & { children: React.ReactNode }) => JSX.Element;
+}) => ReactViewConstructor<O> = ({ Component, options, Providers }) =>
   ReactView.extend({
     renderComponent() {
       const props = isFunction(this.options.props)
@@ -55,12 +52,12 @@ const buildExtendedView = ({
       const component = <Component {...parsedProps} />;
 
       if (Providers) {
-        return <Providers>{component}</Providers>;
+        return <Providers {...this.options}>{component}</Providers>;
       }
 
       return component;
     },
-  }) as ReactViewConstructor;
+  });
 
 /**
  * Use this to build your own wrapComponent function with any necessary providers
@@ -85,9 +82,11 @@ const buildExtendedView = ({
  * ```
  */
 const buildWrapComponent =
-  (Providers?: React.FC<{ children: React.ReactNode }>) =>
-  (Component: React.FC, options: Options = {}) => {
-    return buildExtendedView({ Component, options, Providers });
-  };
+  <O extends {}>(
+      Providers?: (props: { children: React.ReactNode } & O) => JSX.Element
+    ) =>
+    (Component: React.FC, options: Options = {}) => {
+      return buildExtendedView<O>({ Component, options, Providers });
+    };;;
 
 export default buildWrapComponent;

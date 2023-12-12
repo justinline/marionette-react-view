@@ -5,7 +5,8 @@
 import Mn from "backbone.marionette";
 import { createRoot } from "react-dom/client";
 
-const ReactView: typeof Mn.View = Mn.View.extend({
+
+const ReactView: ReturnType<typeof Mn.View.extend> = Mn.View.extend({
   className() {
     const classNames = this.options?.classNames?.join(" ");
 

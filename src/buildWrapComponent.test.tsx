@@ -1,9 +1,8 @@
-import { describe, expect, it, beforeEach, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import buildWrapComponent from "./buildWrapComponent";
 import React from "react";
 import Mn from "backbone.marionette";
 import _ from "lodash";
-import Backbone from "backbone";
 
 describe("buildWrapComponent", () => {
   it("should return a function", () => {
@@ -58,5 +57,37 @@ describe("buildWrapComponent", () => {
     view.destroy();
 
     expect(view.$el.html()).toBe("");
+  });
+
+  it("should take Providers", async () => {
+    const MyComponent = () => <div>My Component</div>;
+
+    const wrapComponent = buildWrapComponent<{
+      additionalOption: React.ReactNode;
+    }>(({ children, additionalOption }) => (
+      <div className="pretend-provider">
+        {children}
+        {additionalOption}
+      </div>
+    ));
+
+    const MyComponentView = wrapComponent(MyComponent);
+
+    const exampleView = new MyComponentView({
+      additionalOption: <div>Extra Options passed to providers</div>,
+    });
+
+    exampleView.render();
+    // TODO: Figure out why this isn't getting called automatically.
+    exampleView.triggerMethod("dom:refresh");
+    await vi.waitFor(() =>
+      expect(exampleView.$el.html()).toContain("Extra Options")
+    );
+
+    await vi.waitFor(() =>
+      expect(exampleView.$el.html()).toMatchInlineSnapshot(
+        `"<div class="pretend-provider"><div>My Component</div><div>Extra Options passed to providers</div></div>"`
+      )
+    );
   });
 });
