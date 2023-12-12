@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "target": "es5", // Compile to ES5 for compatibility with most environments
+    "module": "commonjs", // Use commonjs modules, suitable for Node.js
+    "lib": ["dom", "es2015"], // Include DOM and ES2015+ type definitions
+    "declaration": true, // Generate .d.ts files for TypeScript users
+    "outDir": "./lib", // Output directory for compiled files
+    "strict": true, // Enable all strict type-checking options
+    "esModuleInterop": true, // Enables compatibility with Babel and CommonJS
+    "skipLibCheck": true, // Skip type checking for all declaration files
+    "forceConsistentCasingInFileNames": true // Ensure casing is correct in imports
+  },
+  "include": ["src"], // Include your source files
+  "exclude": ["node_modules"] // Exclude node_modules and the lib folder
+}
