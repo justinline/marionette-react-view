@@ -61,7 +61,12 @@ export default Mn.View.extend({
         reactRegion: '.example-react-region',
     },
     onRender() {
-        this.showChildView('reactRegion', new MyButtonView({props: {text: 'Click me!'}}))
+        this.showChildView(
+            'reactRegion', 
+            new MyButtonView(
+                { props: { text: 'Click me!'}, store: myReduxStore }
+            )
+        )
     }
 })
 ```
@@ -90,3 +95,12 @@ becomes
 ```
 
 You can see the middle `<div>` in the example got replaced by the `<p>` which is the react component
+
+## Demo
+
+Run `npm run dev` to check out the demo page
+
+## Tests
+
+Run `npm run test` to run the integration tests
+
