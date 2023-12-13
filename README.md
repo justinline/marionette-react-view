@@ -1,5 +1,7 @@
 # Marionette React View tooling
 
+TODO: Publish on `npm`
+
 ## What is this?
 
 Found yourself working on an old Marionettejs app? Want to migrate to react? Can't just rewrite the whole thing?
