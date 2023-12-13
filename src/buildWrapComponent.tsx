@@ -15,7 +15,9 @@ type ReactViewConstructor<
     any
   >
 > = new (
-  options?: (Mn.ViewOptions<T> & { classNames?: string[] } & O) | undefined
+  options?:
+    | (Mn.ViewOptions<T> & { classNames?: string[] } & O & { props?: any })
+    | undefined
 ) => Mn.View<T>;
 
 type Options = {
@@ -83,10 +85,10 @@ const buildExtendedView: <O>(props: {
  */
 const buildWrapComponent =
   <O extends {}>(
-      Providers?: (props: { children: React.ReactNode } & O) => JSX.Element
-    ) =>
-    (Component: React.FC, options: Options = {}) => {
-      return buildExtendedView<O>({ Component, options, Providers });
-    };;;
+    Providers?: (props: { children: React.ReactNode } & O) => JSX.Element
+  ) =>
+  (Component: React.FC, options: Options = {}) => {
+    return buildExtendedView<O>({ Component, options, Providers });
+  };
 
 export default buildWrapComponent;
