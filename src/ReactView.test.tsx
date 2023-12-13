@@ -6,7 +6,7 @@ import ReactView from "./ReactView";
 const wrapComponent = buildWrapComponent();
 
 describe("ReactView", () => {
-  it("should join classNames", () => {
+  it("should join classNames along with the default one", () => {
     const MyComponentView = wrapComponent(() => <div>MyComponent</div>);
 
     const view = new MyComponentView({ classNames: ["foo", "bar"] });
