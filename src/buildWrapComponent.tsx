@@ -41,7 +41,9 @@ type Options = {
 const buildExtendedView: <O>(props: {
   Component: React.FC;
   options: Options;
-  Providers?: (providerProps: O & { children: React.ReactNode }) => JSX.Element;
+  Providers?: (
+    providerProps: { options: O } & { children: React.ReactNode }
+  ) => JSX.Element;
 }) => ReactViewConstructor<O> = ({ Component, options, Providers }) =>
   ReactView.extend({
     renderComponent() {
@@ -54,7 +56,7 @@ const buildExtendedView: <O>(props: {
       const component = <Component {...parsedProps} />;
 
       if (Providers) {
-        return <Providers {...this.options}>{component}</Providers>;
+        return <Providers options={this.options}>{component}</Providers>;
       }
 
       return component;
@@ -85,7 +87,9 @@ const buildExtendedView: <O>(props: {
  */
 const buildWrapComponent =
   <O extends {}>(
-    Providers?: (props: { children: React.ReactNode } & O) => JSX.Element
+    Providers?: (
+      props: { children: React.ReactNode } & { options: O }
+    ) => JSX.Element
   ) =>
   (Component: React.FC, options: Options = {}) => {
     return buildExtendedView<O>({ Component, options, Providers });

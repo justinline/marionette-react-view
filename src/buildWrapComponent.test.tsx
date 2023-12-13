@@ -64,10 +64,10 @@ describe("buildWrapComponent", () => {
 
     const wrapComponent = buildWrapComponent<{
       additionalOption: React.ReactNode;
-    }>(({ children, additionalOption }) => (
+    }>(({ children, options }) => (
       <div className="pretend-provider">
         {children}
-        {additionalOption}
+        {options.additionalOption}
       </div>
     ));
 

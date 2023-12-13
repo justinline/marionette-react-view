@@ -48,8 +48,8 @@ const ThemeProvider = ({
 };
 
 const wrapComponentWithProviders = buildWrapComponent<{ override?: Skin }>(
-  ({ children, override }) => (
-    <ThemeProvider override={override}>{children}</ThemeProvider>
+  ({ children, options }) => (
+    <ThemeProvider override={options.override}>{children}</ThemeProvider>
   )
 );
 
