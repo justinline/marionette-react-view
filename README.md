@@ -1,16 +1,20 @@
 # Marionette React View tooling
 
+## Work in progress
 TODO: Publish on `npm`
+TODO: Test more provider use-cases
 
 ## What is this?
 
-Found yourself working on an old Marionettejs app? Want to migrate to react? Can't just rewrite the whole thing?
+Found yourself working on an old Marionettejs app? Want to migrate to react so you can have a better DevEx? Can't just rewrite the whole thing?
 
 This might be for you!
 
 This small repo provides some utilities for glue-code that can render react components inside of marionette applications.
 
-This allows you to re-use stuff from your existing react design systems with ease.
+This allows you to re-use stuff from your existing React design systems with ease.
+
+Note: It is slightly opinionated in that it uses `zod` for schema validation to get type-safe props.
 
 ## Usage
 
@@ -30,8 +34,8 @@ type CustomOptions = {
     store: typeof myReduxStore
 };
 
-export const wrapComponent = buildWrapComponent(
-    ({options, children}: {options: CustomOptions, children: React.ReactNode}) => (
+export const wrapComponent = buildWrapComponent<CustomOptions>(
+    ({options, children}) => (
         <ThemeProvider>
             <Provider store={options.store}>
                 {children}
@@ -44,7 +48,7 @@ export const wrapComponent = buildWrapComponent(
 then you can use this in your existing marionette views, as follows:
 
 ```js
-import {wrapComponent} from 'utils/wrapComponent';
+import { wrapComponent } from '~/utils/wrapComponent';
 import template from 'lodash/template';
 import z from 'zod'
 
